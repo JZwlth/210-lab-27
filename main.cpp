@@ -40,5 +40,57 @@ switch (choice) {
                 break;
             }
             case 2: {
+                // Delete Villager
+                string name;
+                cout << "Enter villager name to delete: ";
+                getline(cin, name);
+
+                if (villagers.erase(name)) {
+                    cout << name << " deleted.\n";
+                } else {
+                    cout << name << " not found.\n";
+                }
+                break;
+            }
+            case 3: {
+                // Increase Friendship
+                string name;
+                cout << "Enter villager name to increase friendship: ";
+                getline(cin, name);
+
+                auto it = villagers.find(name);
+                if (it != villagers.end()) {
+                    int& level = get<0>(it->second);
+                    if (level < 10) {
+                        level++;
+                        cout << "Friendship level increased to " << level << ".\n";
+                    } else {
+                        cout << "Friendship level is already at maximum.\n";
+                    }
+                } else {
+                    cout << name << " not found.\n";
+                }
+                break;
+            }
+            case 4: {
+                // Decrease Friendship
+                string name;
+                cout << "Enter villager name to decrease friendship: ";
+                getline(cin, name);
+
+                auto it = villagers.find(name);
+                if (it != villagers.end()) {
+                    int& level = get<0>(it->second);
+                    if (level > 0) {
+                        level--;
+                        cout << "Friendship level decreased to " << level << ".\n";
+                    } else {
+                        cout << "Friendship level is already at minimum.\n";
+                    }
+                } else {
+                    cout << name << " not found.\n";
+                }
+                break;
+            }
     return 0;
 }
