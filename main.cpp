@@ -6,9 +6,15 @@
 using namespace std;
 
 void displayVillagers(const map<string, tuple<int, string, string>>& villagers) {
-
+    cout << "\nVillager details:\n";
+    for (const auto& villager : villagers) {
+        cout << villager.first << " ["
+             << get<0>(villager.second) << ", "
+             << get<1>(villager.second) << ", "
+             << get<2>(villager.second) << "]\n";
+    }
+    cout << endl;
 }
-
 
 int main() {
     map<string, tuple<int, string, string>> villagers;
@@ -24,12 +30,18 @@ int main() {
              << "Enter choice: ";
         cin >> choice;
         cin.ignore();  // Clear the input buffer
-switch (choice) {
+
+        switch (choice) {
             case 1: {
                 // Add Villager
                 string name, species, catchphrase;
                 int friendshipLevel;
 
+                cout << "Villager name: ";
+                getline(cin, name);
+                cout << "Friendship level: ";
+                cin >> friendshipLevel;
+                cin.ignore();
                 cout << "Species: ";
                 getline(cin, species);
                 cout << "Catchphrase: ";
@@ -92,5 +104,37 @@ switch (choice) {
                 }
                 break;
             }
+            case 5: {
+                // Search for Villager
+                string name;
+                cout << "Enter villager name to search: ";
+                getline(cin, name);
+
+                auto it = villagers.find(name);
+                if (it != villagers.end()) {
+                    cout << "Found villager:\n";
+                    cout << name << " ["
+                         << get<0>(it->second) << ", "
+                         << get<1>(it->second) << ", "
+                         << get<2>(it->second) << "]\n";
+                } else {
+                    cout << name << " not found.\n";
+                }
+                break;
+            }
+            case 6:
+                // Exit
+                cout << "Exiting program.\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+
+        if (choice != 6) {
+            displayVillagers(villagers);
+        }
+
+    } while (choice != 6);
+
     return 0;
 }
